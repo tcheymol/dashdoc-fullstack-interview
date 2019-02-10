@@ -1,0 +1,6 @@
+Django
+django-cors-headers
+djangorestframework
+git+git://github.com/obayemi/giphy-python-client
+python-dateutil
+pytz
