@@ -83,20 +83,26 @@ class FetchViewSet(ViewSet):
         """
         fetch gifs, save them to the DB, and return them
         don't save them if already in DB
-        atomic, don't let concurrency create dupes (or raise integrityerror on
-        duplicate the slug)
-        really ugly code to prevent dupes + still get the Ids of new entries,
-        Ok, for small fetches, even more reason to use slugs,
-        (retrieval information already present before save), no need to refetch
+        atomic, don't let concurrency create duplicates
         """
-        gifs = list(GetGifs().get_gifs())
-        dupes = TruckGif.objects.filter(slug__in=(gif.slug for gif in gifs))
-        new = filter(lambda gif: gif.slug not in (dup.slug for dup in dupes), gifs)
-        saved = TruckGif.objects.bulk_create(new)
+        fetched_gifs = list(GetGifs().get_gifs())
 
-        gifs = (*TruckGif.objects.filter(slug__in=(gif.slug for gif in saved)), *dupes)
+        # Filter out duplicates
+        dupes = TruckGif.objects.filter(slug__in=(gif.slug for gif in fetched_gifs))
+        unduplicated_gifs = list(
+            filter(lambda gif: gif.slug not in (dup.slug for dup in dupes), fetched_gifs)
+        )
+
+        saved = TruckGif.objects.bulk_create(unduplicated_gifs)
+
+        response_gifs = (*TruckGif.objects.filter(slug__in=(gif.slug for gif in saved)), *dupes)
+
         return Response(
-            {"results": TruckGifSerializer(gifs, many=True, context={"request": request}).data}
+            {
+                "results": TruckGifSerializer(
+                    response_gifs, many=True, context={"request": request}
+                ).data
+            }
         )
 
 

@@ -36,7 +36,7 @@ class TestGifs(APITestCase):
         resp = client.post("/api/fetch/")
         self.assertEqual(resp.status_code, 200)
         self.assertEqual(TruckGif.objects.all().count(), 10)
-        self.assertEqual(len(resp.data), 10)
+        self.assertEqual(len(resp.data["results"]), 10)
 
     def test_crud(self):
         client = self.get_client(True)
