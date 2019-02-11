@@ -28,8 +28,8 @@ class TestGifs(APITestCase):
 
     def test_not_authentificated(self):
         client = APIClient()
-        self.assertEqual(client.post("/api/fetch/").status_code, 403)
-        self.assertEqual(client.get("/api/gifs/").status_code, 403)
+        self.assertEqual(client.post("/api/fetch/").status_code, 401)
+        self.assertEqual(client.get("/api/gifs/").status_code, 200)
 
     def test_fetch(self):
         client = self.get_client()

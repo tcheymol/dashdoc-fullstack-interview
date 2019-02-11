@@ -1,13 +1,17 @@
 import giphy_client
 from giphy_client.rest import ApiException
+
 from django.conf import settings
-from .models import TruckGif
-from rest_framework.permissions import IsAdminUser, AllowAny
+from django.db import transaction
+
+from rest_framework.exceptions import APIException
+from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet, ViewSet
+
+from .models import TruckGif
 from .serializers import TruckGifSerializer
-from django.db import transaction
-from rest_framework.exceptions import APIException
+from .permissions import HasGifPermission
 
 
 class GiphyException(APIException):
@@ -113,14 +117,4 @@ class GifViewSet(ModelViewSet):
 
     queryset = TruckGif.objects.all()
     serializer_class = TruckGifSerializer
-    permission_classes = (AllowAny,)
-
-    def destroy(self, request, *args, **kwargs):
-        """
-        Specific adminonly delete permissions
-        Allow only SuperUser or staff/admin? staff seem to make more sense
-        Would have used decorator, but it don't seem to work on viewSet methods
-        """
-        if not IsAdminUser().has_permission(request, self):
-            self.permission_denied(request)
-        return super().destroy(request, *args, **kwargs)
+    permission_classes = [HasGifPermission]
