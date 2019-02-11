@@ -6,7 +6,7 @@ from django.contrib import admin
 from rest_framework import routers
 from rest_framework.authtoken import views as auth_views
 
-from truckfinder.views import UserViewSet
+from accounts.views import UserViewSet
 from gifs.views import FetchViewSet, GifViewSet
 
 router = routers.DefaultRouter()

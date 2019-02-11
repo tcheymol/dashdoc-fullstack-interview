@@ -5,9 +5,8 @@ from django.db import models
 
 class TruckGif(models.Model):
     """
-    giphy GIFs representation in truckly DB
+    giphy GIFs representation in Truckfinder DB
     save gif url, mp4 and preview url for better performances
-    height and width
 
     Could save here urls / sizes of fixed height/width versions for mobile use
     """

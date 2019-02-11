@@ -3,7 +3,7 @@ from rest_framework import serializers
 from .models import TruckGif
 
 
-class GifSerializer(serializers.HyperlinkedModelSerializer):
+class TruckGifSerializer(serializers.HyperlinkedModelSerializer):
     """
     serializer class for Truck Gifs
     """

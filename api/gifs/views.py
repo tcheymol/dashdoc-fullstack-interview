@@ -2,16 +2,12 @@ import giphy_client
 from giphy_client.rest import ApiException
 from django.conf import settings
 from .models import TruckGif
-from rest_framework.decorators import list_route, permission_classes
 from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
-from rest_framework.views import APIView
-from rest_framework.viewsets import ModelViewSet, ViewSet, GenericViewSet
-from .serializers import GifSerializer
+from rest_framework.viewsets import ModelViewSet, ViewSet
+from .serializers import TruckGifSerializer
 from django.db import transaction
 from rest_framework.exceptions import APIException
-
-import random
 
 
 class GiphyException(APIException):
@@ -24,19 +20,9 @@ class GiphyException(APIException):
     default_code = "service_unavailable"
 
 
-class NotFoundException(APIException):
-    """
-    no gif in db when searching for random
-    """
-
-    status_code = 204
-    default_detail = "No gif in database"
-    default_code = "no_content"
-
-
 class GetGifs:
     """
-    Simpe class to fetch gifs from giphy api and format them for the DB
+    Simple class to fetch gifs from giphy api and format them for the DB
     By default search for 10 trucks gifs, can be overridden
     """
 
@@ -110,7 +96,7 @@ class FetchViewSet(ViewSet):
 
         gifs = (*TruckGif.objects.filter(slug__in=(gif.slug for gif in saved)), *dupes)
         return Response(
-            {"results": GifSerializer(gifs, many=True, context={"request": request}).data}
+            {"results": TruckGifSerializer(gifs, many=True, context={"request": request}).data}
         )
 
 
@@ -120,7 +106,7 @@ class GifViewSet(ModelViewSet):
     """
 
     queryset = TruckGif.objects.all()
-    serializer_class = GifSerializer
+    serializer_class = TruckGifSerializer
     permission_classes = (AllowAny,)
 
     def destroy(self, request, *args, **kwargs):
@@ -132,19 +118,3 @@ class GifViewSet(ModelViewSet):
         if not IsAdminUser().has_permission(request, self):
             self.permission_denied(request)
         return super().destroy(request, *args, **kwargs)
-
-    @list_route(methods=["get"])
-    @transaction.atomic
-    def random(self, request):
-        """
-        Get random item, make atomic to prevent unlikely event where items are
-        removed from db between the count and the fetching of the item
-        """
-        queryset = self.get_queryset()
-        count = queryset.count()
-        if count == 0:
-            # 404 if no gifs in database
-            raise NotFoundException()
-
-        serializer = self.get_serializer(queryset[random.randint(0, count - 1)])
-        return Response(serializer.data)

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "corsheaders",
+    "accounts",
     "gifs",
 ]
 
@@ -56,7 +57,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "truckfinder.urls"
+ROOT_URLCONF = "urls"
 
 TEMPLATES = [
     {
@@ -74,7 +75,7 @@ TEMPLATES = [
     }
 ]
 
-WSGI_APPLICATION = "truckfinder.wsgi.application"
+WSGI_APPLICATION = "wsgi.application"
 
 
 # Database
@@ -101,6 +102,10 @@ AUTH_PASSWORD_VALIDATORS = [
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ),
     "PAGE_SIZE": 10,
 }
 

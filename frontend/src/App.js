@@ -30,9 +30,10 @@ class App extends Component {
             const request = await fetch(`${GIFS_URL}?page=${this.state.page}`);
             const response = await request.json();
 
+            const gifs = this.state.gifs.concat(response.results);
             this.setState({
-                gifs: this.state.gifs.concat(response.results),
-                step: STATES.LOADED,
+                gifs: gifs,
+                step: gifs.length === 0 ? STATES.NO_RESULTS : STATES.LOADED,
                 page: response.next ? this.state.page + 1 : null,
             });
         } catch (err) {
