@@ -4,6 +4,7 @@ import "./App.css";
 import GifsList from './components/GifsList';
 import Loading from './components/Loading';
 import Error from './components/Error';
+import NoResult from './components/NoResult';
 
 const API_BASE = "http://localhost:8000/api";
 const GIFS_URL = API_BASE + "/gifs/";
@@ -45,10 +46,6 @@ class App extends Component {
         }
     };
 
-    renderNoResults = () => {
-        return <div className="no-results">No gifs found, try fetching from Giphy</div>;
-    };
-
     render() {
         return (
             <React.Fragment>
@@ -69,7 +66,7 @@ class App extends Component {
                     {this.state.step === STATES.LOADING && <Loading />}
                     {this.state.step === STATES.LOADED && <GifsList gifs={this.state.gifs} page={this.state.page} fetchGifs={this.fetchGifs}/>}
                     {this.state.step === STATES.ERROR && <Error errorMessage={this.state.errorMessage} />}
-                    {this.state.step === STATES.NO_RESULTS && this.renderNoResults()}
+                    {this.state.step === STATES.NO_RESULTS && <NoResult />}
                 </div>
             </React.Fragment>
         );
