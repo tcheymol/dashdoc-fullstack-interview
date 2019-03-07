@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import "./App.css";
 
 import GifsList from './components/GifsList';
+import Loading from './components/Loading';
 
 const API_BASE = "http://localhost:8000/api";
 const GIFS_URL = API_BASE + "/gifs/";
@@ -43,19 +44,6 @@ class App extends Component {
         }
     };
 
-    renderLoading = () => {
-        return (
-            <div className="loading">
-                Loading...
-                <div className="loading-icon">
-                    <span role="img" aria-label="hourglass">
-                        ⏳
-                    </span>
-                </div>
-            </div>
-        );
-    };
-
     renderError = () => {
         return (
             <div className="error-box">
@@ -86,7 +74,7 @@ class App extends Component {
                     </div>
                 </header>
                 <div className="app">
-                    {this.state.step === STATES.LOADING && this.renderLoading()}
+                    {this.state.step === STATES.LOADING && <Loading />}
                     {this.state.step === STATES.LOADED && <GifsList gifs={this.state.gifs} page={this.state.page} fetchGifs={this.fetchGifs}/>}
                     {this.state.step === STATES.ERROR && this.renderError()}
                     {this.state.step === STATES.NO_RESULTS && this.renderNoResults()}
