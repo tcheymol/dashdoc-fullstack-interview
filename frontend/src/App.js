@@ -3,6 +3,7 @@ import "./App.css";
 
 import GifsList from './components/GifsList';
 import Loading from './components/Loading';
+import Error from './components/Error';
 
 const API_BASE = "http://localhost:8000/api";
 const GIFS_URL = API_BASE + "/gifs/";
@@ -44,15 +45,6 @@ class App extends Component {
         }
     };
 
-    renderError = () => {
-        return (
-            <div className="error-box">
-                <div className="error-box-title">Uh oh, an error occurred</div>
-                <div className="error-box-message"> {this.state.errorMessage}</div>
-            </div>
-        );
-    };
-
     renderNoResults = () => {
         return <div className="no-results">No gifs found, try fetching from Giphy</div>;
     };
@@ -76,7 +68,7 @@ class App extends Component {
                 <div className="app">
                     {this.state.step === STATES.LOADING && <Loading />}
                     {this.state.step === STATES.LOADED && <GifsList gifs={this.state.gifs} page={this.state.page} fetchGifs={this.fetchGifs}/>}
-                    {this.state.step === STATES.ERROR && this.renderError()}
+                    {this.state.step === STATES.ERROR && <Error errorMessage={this.state.errorMessage} />}
                     {this.state.step === STATES.NO_RESULTS && this.renderNoResults()}
                 </div>
             </React.Fragment>
