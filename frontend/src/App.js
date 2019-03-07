@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import "./App.css";
 
+import GifsList from './components/GifsList';
+
 const API_BASE = "http://localhost:8000/api";
 const GIFS_URL = API_BASE + "/gifs/";
 
@@ -41,22 +43,6 @@ class App extends Component {
         }
     };
 
-    handleLoadMoreClick = event => {
-        event.preventDefault();
-        this.fetchGifs();
-    };
-
-    renderGif = gif => {
-        return (
-            <div className="gif" key={gif.slug}>
-                <div className="gif-title">{gif.title}</div>
-                <video autoPlay="autoplay" loop muted>
-                    <source src={gif.mp4} />
-                </video>
-            </div>
-        );
-    };
-
     renderLoading = () => {
         return (
             <div className="loading">
@@ -67,19 +53,6 @@ class App extends Component {
                     </span>
                 </div>
             </div>
-        );
-    };
-
-    renderGifs = () => {
-        return (
-            <React.Fragment>
-                <div className="gif-list">{this.state.gifs.map(this.renderGif)}</div>
-                {this.state.page !== null && (
-                    <div className="gif-list-load-more">
-                        <button onClick={this.handleLoadMoreClick}>Load more!</button>
-                    </div>
-                )}
-            </React.Fragment>
         );
     };
 
@@ -114,7 +87,7 @@ class App extends Component {
                 </header>
                 <div className="app">
                     {this.state.step === STATES.LOADING && this.renderLoading()}
-                    {this.state.step === STATES.LOADED && this.renderGifs()}
+                    {this.state.step === STATES.LOADED && <GifsList gifs={this.state.gifs} page={this.state.page} fetchGifs={this.fetchGifs}/>}
                     {this.state.step === STATES.ERROR && this.renderError()}
                     {this.state.step === STATES.NO_RESULTS && this.renderNoResults()}
                 </div>
