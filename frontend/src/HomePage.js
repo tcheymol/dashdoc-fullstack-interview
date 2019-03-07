@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import { Link } from "react-router-dom";
 import "./App.css";
 
 import GifsList from './components/GifsList';
@@ -58,7 +59,7 @@ class HomePage extends Component {
                             Truckfinder
                         </div>
                         <div className="header-buttons">
-                            <button>Log in</button>
+                            <Link to="/login">Log in</Link>
                         </div>
                     </div>
                 </header>
