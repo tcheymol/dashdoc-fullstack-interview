@@ -18,10 +18,9 @@ const STATES = {
 };
 
 class HomePage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {step: STATES.LOADING, gifs: [], page: 1};
-    }
+    state = {
+        step: STATES.LOADING, gifs: [], page: 1
+    };
 
     componentDidMount = async () => {
         this.fetchGifs();
