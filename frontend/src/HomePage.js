@@ -16,7 +16,7 @@ const STATES = {
     LOADED: "loaded",
 };
 
-class App extends Component {
+class HomePage extends Component {
     constructor(props) {
         super(props);
         this.state = {step: STATES.LOADING, gifs: [], page: 1};
@@ -73,4 +73,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default HomePage;
