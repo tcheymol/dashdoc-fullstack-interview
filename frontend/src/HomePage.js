@@ -22,7 +22,7 @@ class HomePage extends Component {
         step: STATES.LOADING, gifs: [], page: 1
     };
 
-    componentDidMount = async () => {
+    componentDidMount = () => {
         this.fetchGifs();
     };
 
