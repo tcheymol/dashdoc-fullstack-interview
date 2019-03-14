@@ -6,11 +6,39 @@ button {
     cursor: pointer;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    width: calc(100% - 32px);
+}
+
+@media (min-width: 600px) {
+    form{
+        width: 400px;
+    }
+}
+
+input {
+    padding: 5px;
+    font-size: 16px;
+    border-width: 1px;
+    border-color: #CCCCCC;
+    background-color: #FFFFFF;
+    color: #000000;
+    border-style: solid;
+    margin-bottom: 16px;
+    border-radius: 0;
+}
+
 .app {
     max-width: 960px;
     margin: 0 auto;
     margin-top: 50px;
     padding: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .header {
