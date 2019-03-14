@@ -21,10 +21,19 @@ class LoginPage extends React.Component {
             },
             body: JSON.stringify({username, password}),
         })
-        .then((response) => response.json())
+        .then((response) => {
+            if(response.status!==200) {
+              throw new Error(response.status)
+            }
+            return response.json()
+        })
         .then((json) => {
             const token = json.token;
             localStorage.setItem('token', token);
+            alert('You successfully logged in');
+        })
+        .catch((error) => {
+            alert('There has been an error logging in, please retry');
         });
     };
 
