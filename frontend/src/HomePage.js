@@ -1,11 +1,11 @@
 import React, {Component} from "react";
-import { Link } from "react-router-dom";
 import "./App.css";
 
 import GifsList from './components/GifsList';
 import Loading from './components/Loading';
 import Error from './components/Error';
 import NoResult from './components/NoResult';
+import Header from "./components/Header";
 
 const API_BASE = "http://localhost:8000/api";
 const GIFS_URL = API_BASE + "/gifs/";
@@ -49,19 +49,7 @@ class HomePage extends Component {
     render() {
         return (
             <React.Fragment>
-                <header className="header">
-                    <div className="header-inner">
-                        <div className="header-title">
-                            <span role="img" aria-label="truck-logo">
-                                🚚
-                            </span>
-                            Truckfinder
-                        </div>
-                        <div className="header-buttons">
-                            <Link to="/login">Log in</Link>
-                        </div>
-                    </div>
-                </header>
+                <Header />
                 <div className="app">
                     {this.state.step === STATES.LOADING && <Loading />}
                     {this.state.step === STATES.LOADED && <GifsList gifs={this.state.gifs} page={this.state.page} fetchGifs={this.fetchGifs}/>}
