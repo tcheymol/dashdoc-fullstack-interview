@@ -15,6 +15,7 @@ router.register(r"fetch", FetchViewSet, base_name="fetch")
 router.register(r"gifs", GifViewSet)
 urlpatterns = [
     url(r"^api/", include(router.urls)),
+    url(r"^me/", UserViewSet.as_view({"get": "retrieve"})),
     url(r"^admin/", admin.site.urls),
     url(r"^api-auth/", include("rest_framework.urls", namespace="rest_framework")),
     url(r"^api-token-auth/", auth_views.obtain_auth_token),

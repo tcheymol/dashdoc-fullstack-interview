@@ -13,7 +13,6 @@ class LoginPage extends React.Component {
     login = (event) => {
         event.preventDefault();
         const {username, password} = this.state;
-        console.log(username, password)
         fetch('http://127.0.0.1:8000/api-token-auth/', {
             method: 'POST',
             headers: {
