@@ -28,7 +28,9 @@ class Header extends React.Component{
                 return json;
             })
             .catch((error) => {
-                alert('There has been an error fetching the use, please refresh');
+                if(error.message !== '401') {
+                    alert('There has been an error fetching the user, please refresh');
+                }
             });
     };
 
