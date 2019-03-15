@@ -11,16 +11,30 @@ const renderGif = gif => (
 
 
 class Gifs extends React.Component {
+    state = {
+        searchText: '',
+    };
+
     handleLoadMoreClick = (event) => {
         event.preventDefault();
         this.props.fetchGifs();
     };
 
+    updateSearchText = (event) => {
+        this.setState({searchText: event.target.value});
+    };
+
     render() {
         const { gifs, page } = this.props;
+        const { searchText } = this.state;
+        const filteredGifs = gifs.filter((gif) => gif.title.includes(searchText));
         return(
              <React.Fragment>
-                <div className="gif-list">{gifs.map(renderGif)}</div>
+                <div>
+                    <span>Search gifs</span>
+                    <input onChange={this.updateSearchText} type="text" name="searchText" value={searchText} />
+                </div>
+                <div className="gif-list">{filteredGifs.map(renderGif)}</div>
                 {page !== null && (
                     <div className="gif-list-load-more">
                         <button onClick={this.handleLoadMoreClick}>Load more!</button>
