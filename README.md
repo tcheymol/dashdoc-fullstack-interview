@@ -37,4 +37,34 @@ You can then use the token to make logged-in requests to the API by adding the `
 
 POST to `/api/fetch/` to fetch gifs from the API and store them in the DB.
 
+
 [:truck: Happy coding! :truck:](http://media1.giphy.com/media/2G4flVpbo6RmE/giphy.gif)
+
+## Timing des features : 
+
+- [ ] 0m: Set up environment
+- [ ] 5m: Problème avec les migrations
+- [ ] 7m: Au fait c'est un problème de Python, je change le aversion de python 3.7 à python 3.6
+- [ ] 17m: done, Re-pip install
+- [ ] 19m: ✨ install done
+- [ ] 21m: created user and got token
+- [ ] 23m: validé la 403 sans autorisation sur /users {“detail":"Authentication credentials were not provided."}
+- [ ] 24m: résultat OK avec le token 
+    - [ ] curl -H "Authorization: Token 9859714d5084231e28c4e71dbb3351ff8ed7f459" http://localhost:8000/api/users/
+    - [ ] {"count":1,"next":null,"previous":null,"results":[{"url":"http://localhost:8000/api/users/1/","username":"thib","email":"thib@thib.com","is_staff":true}]}
+- [ ] 26m: Gif fetched, bdd opérationnelle
+- [ ] 27m: ✨ Start working
+- [ ] 27m: Petite refato sur le code
+- [ ] 36m: prettier set ups tools
+- [ ] 50m: fin refacto set up tools et tests manuels
+- [ ] 51m: Check solution routing 
+- [ ] 53m: Adding react-router
+- [ ] 59m: react router done, + 2 routes + link avec le bouton
+- [ ] 1h: Mutualisation de l’appbar
+- [ ] 1h02m: Ajout de champs sur la page login
+- [ ] 1h45m: Requête qui log in OK dans le front
+- [ ] 1h50m: On démarre le username
+- [ ] 2h10m: route ok
+- [ ] 2h20m: username dans le header
+- [ ] 2h25m: bouton add more gifs
+- [ ] 2h30m: searchbar
