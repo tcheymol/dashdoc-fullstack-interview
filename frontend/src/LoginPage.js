@@ -30,6 +30,7 @@ class LoginPage extends React.Component {
             const token = json.token;
             localStorage.setItem('token', token);
             alert('You successfully logged in');
+            window.location.replace('/')
         })
         .catch((error) => {
             alert('There has been an error logging in, please retry');
