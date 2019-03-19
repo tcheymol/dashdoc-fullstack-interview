@@ -26,12 +26,18 @@ class HomePage extends Component {
         this.fetchGifs();
     };
 
-    fetchGifs = async () => {
+    fetchGifs = async (search_text) => {
         try {
-            const request = await fetch(`${GIFS_URL}?page=${this.state.page}`);
+            let requestUrl = `${GIFS_URL}?page=${this.state.page}`;
+            let currentGifsList = this.state.gifs;
+            if (search_text) {
+                requestUrl += `&search_text=${search_text}`
+                currentGifsList = [];
+            }
+            const request = await fetch(requestUrl);
             const response = await request.json();
 
-            const gifs = this.state.gifs.concat(response.results);
+            const gifs = currentGifsList.concat(response.results);
             this.setState({
                 gifs: gifs,
                 step: gifs.length === 0 ? STATES.NO_RESULTS : STATES.LOADED,
