@@ -27,10 +27,6 @@ class HomePage extends Component {
     };
 
     fetchGifs = async () => {
-        if (this.state.page === null) {
-            return;
-        }
-
         try {
             const request = await fetch(`${GIFS_URL}?page=${this.state.page}`);
             const response = await request.json();
@@ -39,7 +35,7 @@ class HomePage extends Component {
             this.setState({
                 gifs: gifs,
                 step: gifs.length === 0 ? STATES.NO_RESULTS : STATES.LOADED,
-                page: response.next ? this.state.page + 1 : null,
+                page: response.next ? this.state.page + 1 : 1,
             });
         } catch (err) {
             this.setState({step: STATES.ERROR, gifs: [], errorMessage: err.toString()});
@@ -49,7 +45,7 @@ class HomePage extends Component {
     render() {
         return (
             <React.Fragment>
-                <Header />
+                <Header fetchGifs={this.fetchGifs} />
                 <div className="app">
                     {this.state.step === STATES.LOADING && <Loading />}
                     {this.state.step === STATES.LOADED && <GifsList gifs={this.state.gifs} page={this.state.page} fetchGifs={this.fetchGifs}/>}
