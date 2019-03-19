@@ -118,3 +118,18 @@ class GifViewSet(ModelViewSet):
     queryset = TruckGif.objects.all()
     serializer_class = TruckGifSerializer
     permission_classes = [HasGifPermission]
+
+    """
+    Method to search among gifs in the DB
+    """
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        queryset = TruckGif.objects.all()
+        search_text = self.request.query_params.get('search_text', None)
+        if search_text is not None:
+            queryset = queryset.filter(title__contains=search_text)
+
+        return queryset
