@@ -27,7 +27,7 @@ class Header extends React.Component{
 
     fetchCurrentUser = async () => {
          const token = localStorage.getItem('token');
-         fetch('http://127.0.0.1:8000/me/', {
+         fetch('http://127.0.0.1:8000/api/users/me/', {
                 method: 'GET',
                 headers: {
                     "Authorization": `Token ${token}`,
